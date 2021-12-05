@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../styles/FAQs.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <title>Sewa</title>
+</head>
+
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <label class="logo">Sewa</label>
+        <ul>
+            <li><a class="active" href="#">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="points.html">Sewa Points</a></li>
+            <li><a href="#">Invite friends</a></li>
+        </ul>
+    </nav>
+
+    <div class="container-1">
+
+        <div class="left">
+            <h1>You are here for ?</h1>
+
+            <form class="one">
+                <div id="buttons">
+                    <a id = "text" href="task_to_help.html">
+                        I want help
+                    </a>
+                    <a id = "text" href="task_in_area.html">
+                        I want to help
+                    </a>
+                </div>
+            </form>
+
+        </div>
+        <div class="right">
+            <h1 style="font-weight: bolder;">Frequently Asked Questions</h1>
+            <div class="accordion js-accordion" data-id="accordion1">
+                <button type="button" id="accordionOne" class="accordion__button js-accordion__button is-active"
+                    aria-expanded="false" aria-controls="sectionOne">
+                    Q) Are there any registration charges on Sewa/ Will there be any charges if I avail services from Sewa?
+                </button>
+                <div id="sectionOne" class="accordion__body js-accordion__body" role="region"
+                    aria-labelledby="accordionOne">
+                    <div style="padding: 20px;">
+                        <p style="margin: 0;">A) No ,there are absolutely no charges for registration or availing services from Sewa.</p>
+                    </div>
+                </div>
+                <button type="button" id="accordionTwo" class="accordion__button js-accordion__button"
+                    aria-expanded="false" aria-controls="sectionTwo">Q) What kind of help foes Sewa provide?</button>
+                <div id="sectionTwo" class="accordion__body js-accordion__body" role="region"
+                    aria-labelledby="accordionTwo">
+                    <div style="padding: 20px;">
+                        <p style="margin: 0;">A) Sewa provides help with day to day chores and makes life easier for  by connecting you to the ppl near you .some tasks include finding a home caretaker , pet caretaker, babysitting , medicine delivery ,plumber , electrician services etc.</p>
+                    </div>
+                </div>
+                <button type="button" id="accordionThree" class="accordion__button js-accordion__button"
+                    aria-expanded="false" aria-controls="sectionThree">Q) How do you avail points on Sewa</button>
+                <div id="sectionThree" class="accordion__body js-accordion__body" role="region"
+                    aria-labelledby="accordionThree">
+                    <div style="padding: 20px;">
+                        <p style="margin: 0;">A) You avail points on sewa by helping other people in their daily tasks as much as you can. Each task wins you a certain number of points</p>
+                    </div>
+                </div>
+                <button type="button" id="accordionFour" class="accordion__button js-accordion__button"
+                    aria-expanded="false" aria-controls="sectionFour">Q) How do you earn vouchers on Sewa?</button>
+                <div id="sectionFour" class="accordion__body js-accordion__body" role="region"
+                    aria-labelledby="accordionFour">
+                    <div style="padding: 20px;">
+                        <p style="margin: 0;">A) You earn a voucher for every 500 sewa points you gain .</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    <script>
+        'use strict';
+
+        class Accordion {
+            constructor(element, options = {}) {
+                this.accordion = element;
+                this.buttons = null;
+                this.bodies = null;
+                this.options = {
+                    activeClassName: 'is-active',
+                    closeOthers: true,
+                    ...options
+                };
+
+
+                this.handleKeydown = this.handleKeydown.bind(this);
+                this.handleClick = this.handleClick.bind(this);
+                this.handleTransitionend = this.handleTransitionend.bind(this);
+
+                this.init();
+            }
+
+            init() {
+                if (this.accordion.classList.contains('is-init-accordion')) {
+                    throw Error('Accordion is already initialized.');
+                }
+
+                this.buttons = [...this.accordion.querySelectorAll('.js-accordion__button')];
+                this.bodies = [...this.accordion.querySelectorAll('.js-accordion__body')];
+
+                // Handle active accordion item
+                for (const button of this.buttons) {
+                    if (!button.classList.contains(this.options.activeClassName)) continue;
+                    button.setAttribute('aria-expanded', 'true');
+                    const body = button.nextElementSibling;
+                    body.style.display = 'block';
+                    body.style.maxHeight = 'none';
+                }
+
+                // Hide all bodies except the active
+                for (const body of this.bodies) {
+                    if (body.previousElementSibling.classList.contains(this.options.activeClassName)) continue;
+                    body.style.display = 'none';
+                    body.style.maxHeight = '0px';
+                }
+
+                this.addEvents();
+
+                this.accordion.classList.add('is-init-accordion');
+            }
+
+            closeOthers(elException) {
+                for (const button of this.buttons) {
+                    if (button === elException) continue;
+                    button.classList.remove(this.options.activeClassName);
+                    button.setAttribute('aria-expanded', 'false');
+                    const body = button.nextElementSibling;
+                    body.style.maxHeight = `${body.scrollHeight}px`;
+                    setTimeout(() => void (body.style.maxHeight = '0px'), 0);
+                }
+            }
+
+            handleKeydown(event) {
+                const target = event.target;
+                const key = event.which.toString();
+
+                if (target.classList.contains('js-accordion__button') && key.match(/35|36|38|40/)) {
+                    event.preventDefault();
+                } else {
+                    return false;
+                }
+
+                switch (key) {
+                    case '36':
+                        // "Home" key
+                        this.buttons[0].focus();
+                        break;
+                    case '35':
+                        // "End" key
+                        this.buttons[this.buttons.length - 1].focus();
+                        break;
+                    case '38':
+                        // "Up Arrow" key
+                        const prevIndex = this.buttons.indexOf(target) - 1;
+                        if (this.buttons[prevIndex]) {
+                            this.buttons[prevIndex].focus();
+                        } else {
+                            this.buttons[this.buttons.length - 1].focus();
+                        }
+                        break;
+                    case '40':
+                        // "Down Arrow" key
+                        const nextIndex = this.buttons.indexOf(target) + 1;
+                        if (this.buttons[nextIndex]) {
+                            this.buttons[nextIndex].focus();
+                        } else {
+                            this.buttons[0].focus();
+                        }
+                        break;
+                }
+
+            }
+
+            handleClick(event) {
+                const button = event.currentTarget;
+                const body = button.nextElementSibling;
+
+                if (this.options.closeOthers) {
+                    this.closeOthers(button);
+                }
+
+                // Set height to the active body
+                if (body.style.maxHeight === 'none') {
+                    body.style.maxHeight = `${body.scrollHeight}px`;
+                }
+
+                if (button.classList.contains(this.options.activeClassName)) {
+                    // Close accordion item
+                    button.classList.remove(this.options.activeClassName);
+                    button.setAttribute('aria-expanded', 'false');
+                    setTimeout(() => void (body.style.maxHeight = '0px'), 0);
+                } else {
+                    // Open accordion item
+                    button.classList.add(this.options.activeClassName);
+                    button.setAttribute('aria-expanded', 'true');
+                    body.style.display = 'block';
+                    body.style.maxHeight = `${body.scrollHeight}px`;
+                }
+            }
+
+            handleTransitionend(event) {
+                const body = event.currentTarget;
+                if (body.style.maxHeight !== '0px') {
+                    // Remove the height from the active body
+                    body.style.maxHeight = 'none';
+                } else {
+                    // Hide the active body
+                    body.style.display = 'none';
+                }
+            }
+
+            addEvents() {
+                this.accordion.addEventListener('keydown', this.handleKeydown);
+                for (const button of this.buttons) {
+                    button.addEventListener('click', this.handleClick);
+                }
+                for (const body of this.bodies) {
+                    body.addEventListener('transitionend', this.handleTransitionend);
+                }
+            }
+
+            destroy() {
+                this.accordion.removeEventListener('keydown', this.handleKeydown);
+                for (const button of this.buttons) {
+                    button.removeEventListener('click', this.handleClick);
+                }
+                for (const body of this.bodies) {
+                    body.addEventListener('transitionend', this.handleTransitionend);
+                }
+
+                this.buttons = null;
+                this.bodies = null;
+
+                this.accordion.classList.remove('is-init-accordion');
+            }
+        }
+
+
+        // ---
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const accordionEls = [...document.querySelectorAll('.js-accordion')];
+            for (const accordionEl of accordionEls) {
+                new Accordion(accordionEl);
+            }
+        });
+    </script>
+</body>
+</html>
